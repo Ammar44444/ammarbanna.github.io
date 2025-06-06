@@ -32,7 +32,7 @@
 
         body {
             font-family: 'Cairo', 'Poppins', sans-serif;
-            line-height: 0.1;
+            line-height: 0; /* تم التعديل: قيمة طبيعية ومريحة للقراءة */
             margin: 0;
             padding-top: 120px; /* مسافة أعلى لـ header المثبت */
             background: var(--gradient-body); /* استخدام المتغير للخلفية المتدرجة */
@@ -85,11 +85,9 @@
         /* مبدّل اللغة (Language Switcher) - تصميم أنيق وتفاعلي */
         .lang-switcher {
             position: absolute;
-            top: 50%; /* توسيط عمودي */
-            transform: translateY(-50%); /* ضبط التوسيط بناءً على حجم الزر */
+            top: 20px; /* تم التعديل: تثبيت في الزاوية العلوية */
             left: 20px; /* للعربية: على اليسار */
-            display: flex;
-            gap: 10px; /* مسافة بين الأزرار */
+            display: flex; /* لضمان أن الزر يبقى مرنًا */
             z-index: 10; /* للتأكد من ظهوره فوق العناصر الأخرى في الهيدر */
         }
         [dir="ltr"] .lang-switcher { /* للإنجليزية: على اليمين */
@@ -109,6 +107,8 @@
             transition: all 0.3s ease; /* انتقال سلس عند التفاعل */
             backdrop-filter: blur(8px); /* تأثير ضبابي أنيق للخلفية الشفافة */
             box-shadow: 0 2px 8px var(--shadow-light); /* ظل خفيف للزر */
+            min-width: 60px; /* لضمان عرض كافٍ للزر */
+            text-align: center; /* توسيط النص داخل الزر */
         }
 
         .lang-switcher button:hover {
@@ -185,126 +185,9 @@
             }
         }
 
-        @media (max-width: 768px) { /* تعديلات عامة للشاشات الأصغر من 768px (الأجهزة اللوحية والجوالات) */
-            .container {
-                width: 95%; /* زيادة العرض على الشاشات الأصغر لاستغلال المساحة */
-                margin: 20px auto; /* تقليل الهوامش الرأسية */
-            }
-
-            header h1 {
-                font-size: 1.8em; /* تقليل حجم عنوان الهيدر */
-            }
-
-            .lang-switcher {
-                left: 10px; /* تقليل المسافة من اليسار */
-            }
-            [dir="ltr"] .lang-switcher {
-                right: 10px; /* تقليل المسافة من اليمين للغة الإنجليزية */
-            }
-
-            .lang-switcher button {
-                padding: 6px 12px; /* تصغير حجم أزرار اللغة */
-                font-size: 0.85em;
-            }
-
-            .profile-card {
-                padding: 30px 20px; /* تقليل المسافات الداخلية للبطاقة */
-                border-radius: 15px; /* تقليل استدارة الحواف قليلاً */
-            }
-
-            .profile-card img {
-                width: 150px; /* تصغير حجم الصورة */
-                height: 150px;
-                margin-bottom: 20px; /* تقليل المسافة تحت الصورة */
-                border-width: 5px; /* تقليل سمك حدود الصورة */
-            }
-
-            .profile-card h2 {
-                font-size: 2.2em; /* تصغير حجم الاسم */
-            }
-
-            .profile-card p.job-title {
-                font-size: 1.2em; /* تصغير حجم المسمى الوظيفي */
-                margin-bottom: 25px; /* تقليل المسافة */
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr; /* دائما عمود واحد على الجوال لسهولة القراءة */
-                gap: 15px; /* تقليل المسافة بين عناصر الشبكة */
-                margin-bottom: 25px; /* تقليل المسافة */
-            }
-
-            .info-item {
-                font-size: 1em; /* تصغير حجم النص في عناصر المعلومات */
-                padding: 12px 15px; /* تقليل المساحة الداخلية */
-            }
-
-            .info-item i {
-                font-size: 1.4em; /* تصغير حجم أيقونات المعلومات */
-                width: 30px; /* ضبط عرض الأيقونة */
-            }
-
-            .social-links {
-                margin-top: 30px; /* تقليل المسافة من الأعلى */
-                gap: 20px; /* تقليل المسافة بين أيقونات التواصل الاجتماعي */
-            }
-
-            .social-links a {
-                font-size: 2.2em; /* تصغير حجم أيقونات التواصل الاجتماعي */
-            }
-        }
-
-        @media (max-width: 480px) { /* تعديلات خاصة جداً بالجوالات الصغيرة */
-            header {
-                padding: 15px 0; /* تقليل padding في الهيدر */
-            }
-            header h1 {
-                font-size: 1.5em; /* تصغير حجم العنوان أكثر */
-            }
-            .lang-switcher {
-                top: 15px; /* ضبط الموضع في الهيدر */
-                transform: translateY(0);
-                flex-direction: column; /* جعل الأزرار فوق بعضها البعض */
-                gap: 5px;
-            }
-            [dir="ltr"] .lang-switcher {
-                right: 10px;
-                left: unset;
-            }
-            .lang-switcher button {
-                padding: 5px 10px;
-                font-size: 0.8em;
-            }
-
-            body {
-                padding-top: 100px; /* ضبط المسافة العلوية ليتناسب مع الهيدر المصغر */
-            }
-
-            .profile-card {
-                padding: 20px 15px;
-            }
-
-            .profile-card h2 {
-                font-size: 1.8em;
-            }
-
-            .profile-card p.job-title {
-                font-size: 1em;
-            }
-
-            .social-links a {
-                font-size: 2em; /* حجم مناسب جداً لأيقونات السوشيال ميديا على الجوالات الصغيرة */
-                transform: translateY(0) scale(1); /* إلغاء تأثير التحويم القوي على الجوالات */
-            }
-            .social-links a:hover {
-                transform: translateY(0) scale(1.1); /* تأثير تحويم خفيف فقط */
-            }
-        }
-
         .info-item {
             display: flex;
             align-items: center;
-            /* justify-content: flex-start;  // هذا السطر ألغه أو احذفه */
             gap: 15px; /* مسافة بين الأيقونة والنص */
             font-size: 1.15em;
             color: var(--text-color-dark);
@@ -415,13 +298,129 @@
         [dir="ltr"] .info-item {
             justify-content: flex-start; /* محاذاة لليسار في LTR */
         }
+
+        /* التعديلات الخاصة بالتجاوبية للهيدر وأزرار اللغة */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%; /* زيادة العرض على الشاشات الأصغر لاستغلال المساحة */
+                margin: 20px auto; /* تقليل الهوامش الرأسية */
+            }
+
+            header h1 {
+                font-size: 1.8em; /* تقليل حجم عنوان الهيدر */
+            }
+
+            .lang-switcher {
+                left: 10px; /* تقليل المسافة من اليسار */
+                top: 15px; /* تثبيت الموضع ليتناسب مع الجوال */
+            }
+            [dir="ltr"] .lang-switcher {
+                right: 10px; /* تقليل المسافة من اليمين للغة الإنجليزية */
+                left: unset;
+            }
+
+            .lang-switcher button {
+                padding: 6px 12px; /* تصغير حجم أزرار اللغة */
+                font-size: 0.85em;
+            }
+
+            .profile-card {
+                padding: 30px 20px; /* تقليل المسافات الداخلية للبطاقة */
+                border-radius: 15px; /* تقليل استدارة الحواف قليلاً */
+            }
+
+            .profile-card img {
+                width: 150px; /* تصغير حجم الصورة */
+                height: 150px;
+                margin-bottom: 20px; /* تقليل المسافة تحت الصورة */
+                border-width: 5px; /* تقليل سمك حدود الصورة */
+            }
+
+            .profile-card h2 {
+                font-size: 2.2em; /* تصغير حجم الاسم */
+            }
+
+            .profile-card p.job-title {
+                font-size: 1.2em; /* تصغير حجم المسمى الوظيفي */
+                margin-bottom: 25px; /* تقليل المسافة */
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr; /* دائما عمود واحد على الجوال لسهولة القراءة */
+                gap: 15px; /* تقليل المسافة بين عناصر الشبكة */
+                margin-bottom: 25px; /* تقليل المسافة */
+            }
+
+            .info-item {
+                font-size: 1em; /* تصغير حجم النص في عناصر المعلومات */
+                padding: 12px 15px; /* تقليل المساحة الداخلية */
+            }
+
+            .info-item i {
+                font-size: 1.4em; /* تصغير حجم أيقونات المعلومات */
+                width: 30px; /* ضبط عرض الأيقونة */
+            }
+
+            .social-links {
+                margin-top: 30px; /* تقليل المسافة من الأعلى */
+                gap: 20px; /* تقليل المسافة بين أيقونات التواصل الاجتماعي */
+            }
+
+            .social-links a {
+                font-size: 2.2em; /* تصغير حجم أيقونات التواصل الاجتماعي */
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 15px 0; /* تقليل padding في الهيدر */
+            }
+            header h1 {
+                font-size: 1.5em; /* تصغير حجم العنوان أكثر */
+            }
+            .lang-switcher {
+                top: 15px; /* ضبط الموضع في الهيدر */
+                transform: translateY(0); /* تم التعديل: إزالة تحويل العمودية */
+            }
+            [dir="ltr"] .lang-switcher {
+                right: 10px;
+                left: unset;
+            }
+            .lang-switcher button {
+                padding: 5px 10px;
+                font-size: 0.8em;
+            }
+
+            body {
+                padding-top: 100px; /* ضبط المسافة العلوية ليتناسب مع الهيدر المصغر */
+            }
+
+            .profile-card {
+                padding: 20px 15px;
+            }
+
+            .profile-card h2 {
+                font-size: 1.8em;
+            }
+
+            .profile-card p.job-title {
+                font-size: 1em;
+            }
+
+            .social-links a {
+                font-size: 2em; /* حجم مناسب جداً لأيقونات السوشيال ميديا على الجوالات الصغيرة */
+                transform: translateY(0) scale(1); /* إلغاء تأثير التحويم القوي على الجوالات */
+            }
+            .social-links a:hover {
+                transform: translateY(0) scale(1.1); /* تأثير تحويم خفيف فقط */
+            }
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="lang-switcher">
-            <button onclick="setLanguage('ar')" data-lang="langArBtn">العربية</button>
-            <button onclick="setLanguage('en')" data-lang="langEnBtn">English</button>
+            <button id="languageToggleButton" onclick="toggleLanguage()"></button>
         </div>
         <div class="container">
             <h1 data-lang="welcomeTitle">بطاقة أعمال رقمية</h1>
@@ -485,9 +484,8 @@
                 websiteLink: 'السيرة الذاتية',
                 experience: 'خبرة سنة',
                 profession: 'مبرمج',
-                footerText: 'جميع الحقوق محفوظة © 2025',
-                langArBtn: 'العربية',
-                langEnBtn: 'English'
+                footerText: 'جميع الحقوق محفوظة © 2025'
+                // تم إزالة langArBtn و langEnBtn من هنا لأنهما لم يعودا يستخدمان للنص
             },
             'en': {
                 pageTitle: 'Business Card',
@@ -500,33 +498,52 @@
                 websiteLink: 'CV',
                 experience: '1 Year of Experience',
                 profession: 'Programmer',
-                footerText: 'All rights reserved © 2025',
-                langArBtn: 'العربية',
-                langEnBtn: 'English'
+                footerText: 'All rights reserved © 2025'
+                // تم إزالة langArBtn و langEnBtn من هنا لأنهما لم يعودا يستخدمان للنص
             }
         };
 
+        const langToggleButton = document.getElementById('languageToggleButton'); // جلب زر التبديل
+        let currentLang = 'en'; // تعيين اللغة الافتراضية عند التحميل
+
         function setLanguage(lang) {
-            document.documentElement.lang = lang; // تحديث سمة اللغة لـ SEO وقارئات الشاشة
-            document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr'); // تحديد اتجاه النص
+            document.documentElement.lang = lang;
+            document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
 
-            // إعادة تشغيل animation على بطاقة الملف الشخصي لتظهر بانتقال ناعم
             const profileCard = document.querySelector('.profile-card');
-            profileCard.style.animation = 'none'; // تعطيل مؤقت للحركة
-            void profileCard.offsetWidth; // هذا السطر يجبر المتصفح على إعادة حساب العرض، وهو ضروري لإعادة تشغيل الـ animation
-            profileCard.style.animation = 'fadeInScale 1.2s ease-out forwards'; // إعادة تطبيق الـ animation
+            profileCard.style.animation = 'none';
+            void profileCard.offsetWidth;
+            profileCard.style.animation = 'fadeInScale 1.2s ease-out forwards';
 
-            // تحديث النصوص بناءً على اللغة المختارة
             for (const key in translations[lang]) {
                 const element = document.querySelector(`[data-lang="${key}"]`);
                 if (element) {
                     element.textContent = translations[lang][key];
                 }
             }
+            currentLang = lang; // تحديث اللغة الحالية
+            updateToggleButtonText(); // تحديث نص الزر بعد تغيير اللغة
         }
 
-        // تعيين اللغة الافتراضية عند تحميل الصفحة
-        setLanguage('en');
+        function updateToggleButtonText() {
+            if (currentLang === 'ar') {
+                langToggleButton.textContent = 'EN'; // إذا كانت الصفحة بالعربية، الزر يعرض EN
+            } else {
+                langToggleButton.textContent = 'AR'; // إذا كانت الصفحة بالإنجليزية، الزر يعرض AR
+            }
+        }
+
+        function toggleLanguage() {
+            if (currentLang === 'ar') {
+                setLanguage('en');
+            } else {
+                setLanguage('ar');
+            }
+        }
+
+        // تعيين اللغة الافتراضية عند تحميل الصفحة وتحديث نص الزر الأولي
+        setLanguage('en'); // تبدأ بالإنجليزية
+        // updateToggleButtonText(); // سيتم استدعاؤها داخل setLanguage
     </script>
 </body>
 </html>
