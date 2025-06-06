@@ -32,20 +32,20 @@
 
         body {
             font-family: 'Cairo', 'Poppins', sans-serif;
-            line-height: 1.6; /* **هنا تم إعادة القيمة الصحيحة** */
+            line-height: 1.6; /* **قيمة طبيعية ومريحة للقراءة** */
             margin: 0;
-            padding-top: 100px; /* **تم التعديل: إضافة مسافة علوية لتعويض الهيدر الثابت** */
-            background: var(--gradient-body);
-            color: var(--text-color-dark);
-            direction: rtl;
-            text-align: right;
-            min-height: 100vh;
+            padding-top: 100px; /* **تعديل: مسافة أعلى لـ header المثبت. يمكن تعديلها إذا كان الهيدر أعلى أو أقل ارتفاعاً** */
+            background: var(--gradient-body); /* استخدام المتغير للخلفية المتدرجة */
+            color: var(--text-color-dark); /* لون النص الأساسي */
+            direction: rtl; /* الاتجاه الافتراضي للعربية */
+            text-align: right; /* المحاذاة الافتراضية للعربية */
+            min-height: 100vh; /* لجعل الفوتر يلتصق بالأسفل */
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            overflow-x: hidden;
-            transition: all 0.5s ease-in-out;
+            align-items: center; /* لتوسيط المحتوى أفقياً */
+            justify-content: flex-start; /* يبدأ المحتوى من الأعلى */
+            /* overflow-x: hidden; **تم التعليق عليها/إزالتها مؤقتًا للبحث عن سبب الانزياح** */
+            transition: all 0.5s ease-in-out; /* انتقال سلس عند تغيير اتجاه اللغة */
         }
         /* الحاوية الرئيسية للمحتوى */
         .container {
@@ -67,54 +67,44 @@
             color: #fff;
             padding: 20px 0; /* مسافة داخلية محسّنة */
             width: 100%; /* يمتد على عرض الشاشة بالكامل */
-            text-align: center;
             box-shadow: 0 6px 20px var(--shadow-strong); /* ظل أقوى وأكثر بروزاً */
-            position: fixed; /* **تم التعديل: إرجاع الـ header ليكون fixed** */
+            position: fixed; /* تثبيت الهيدر في الأعلى */
             top: 0;
             left: 0;
-            right: 0; /* تم التعديل: لضمان امتداده عبر العرض بالكامل مع التوسيط */
+            right: 0; /* لضمان امتداده عبر العرض بالكامل */
             z-index: 1000; /* ليكون فوق كل شيء آخر في الصفحة */
-            display: flex; /* تم التعديل: لجعل العناصر داخل الهيدر مرنة */
-            justify-content: center; /* تم التعديل: لتوسيط المحتوى داخل الهيدر */
-            align-items: center; /* تم التعديل: لتوسيط العناصر عموديا داخل الهيدر */
-            /*position: relative; تم حذفها من هنا وعادت fixed */
+            display: flex; /* **تعديل: لجعل العناصر داخل الهيدر مرنة** */
+            justify-content: center; /* **تعديل: لتوسيط المحتوى داخل الهيدر** */
+            align-items: center; /* **تعديل: لتوسيط العناصر عموديا داخل الهيدر** */
+            height: 80px; /* **تحديد ارتفاع ثابت للهيدر لتسهيل حساب padding-top للـ body** */
         }
+
         /* الحاوية الداخلية للهيدر للتوسيط */
-        header .container {
+        header .header-content-wrapper { /* **عنصر جديد لجمع العنوان وزر اللغة** */
             max-width: 750px;
             width: 90%;
             margin: 0 auto; /* توسيط الهيدر الداخلي */
-            padding: 0 10px; /* لتوفير مساحة للزر إذا كان قريب من الحافة */
-            display: flex; /* للتأكد من المحاذاة الصحيحة */
-            justify-content: center;
+            padding: 0 15px; /* **تعديل: مسافة داخلية لضمان عدم التصاق زر اللغة بالحافة** */
+            display: flex; /* **تعديل: للتأكد من المحاذاة الصحيحة بين العنوان والزر** */
+            justify-content: space-between; /* **تعديل: لدفع العنوان وزر اللغة إلى الأطراف** */
             align-items: center;
             position: relative; /* لتحديد موقع زر اللغة بداخله */
         }
-        header .container h1 { /* تم تعديل هذا المحدد ليكون أكثر دقة */
-            flex-grow: 1; /* ليأخذ المساحة المتاحة ويجعل الزر في الزاوية */
-            text-align: center; /* لتوسيط العنوان داخل الهيدر */
-        }
 
         header h1 {
-            margin: 0;
-            font-size: 2.2em; /* حجم مناسب للعنوان المثبت */
+            margin: 0; /* إزالة الهوامش الافتراضية للعنوان */
+            font-size: 2.2em;
             letter-spacing: 1px;
             font-weight: 700;
+            flex-grow: 1; /* **تعديل: للسماح للعنوان بأخذ المساحة المتبقية** */
+            text-align: center; /* **تعديل: توسيط النص داخل الـ H1** */
         }
 
         /* مبدّل اللغة (Language Switcher) - تصميم أنيق وتفاعلي */
         .lang-switcher {
-            position: absolute; /* تم التعديل: موضع مطلق بالنسبة لـ header .container */
-            top: 50%; /* تم التعديل: توسيط عمودي بالنسبة للعنوان */
-            transform: translateY(-50%); /* تم التعديل: ضبط التوسيط */
-            left: 0px; /* تم التعديل: ليكون على حافة الـ container */
-            display: flex; /* لضمان أن الزر يبقى مرنًا */
+            display: flex;
             z-index: 10;
-        }
-        /* لتغيير الموقع في اللغة الإنجليزية */
-        body[dir="ltr"] .lang-switcher {
-            left: unset;
-            right: 0px; /* تم التعديل: ليكون على حافة الـ container */
+            /* **تم إزالة position absolute من هنا لأننا سنستخدم flexbox في header-content-wrapper** */
         }
 
         .lang-switcher button {
@@ -315,7 +305,7 @@
             direction: ltr;
             text-align: left;
         }
-        body[dir="ltr"] .info-item { /* تم التعديل: لتطبيق المحاذاة على LTR */
+        body[dir="ltr"] .info-item {
             justify-content: flex-start;
         }
 
@@ -329,15 +319,9 @@
             header h1 {
                 font-size: 1.8em;
             }
-
-            .lang-switcher {
-                left: 10px; /* تم التعديل: ضبط المسافة من الحافة */
-                top: 50%; /* تم التعديل: ليبقى في المنتصف عمودياً في الهيدر */
-                transform: translateY(-50%); /* تم التعديل: لإصلاح التوسيط العمودي */
-            }
-            body[dir="ltr"] .lang-switcher {
-                right: 10px; /* تم التعديل: ضبط المسافة من الحافة */
-                left: unset;
+            
+            header .header-content-wrapper { /* **تعديل خاص بالشاشات الصغيرة للهيدر** */
+                padding: 0 10px; /* مسافة أقل من الجوانب على الموبايل */
             }
 
             .lang-switcher button {
@@ -395,17 +379,14 @@
         @media (max-width: 480px) {
             header {
                 padding: 15px 0;
+                height: 70px; /* **تعديل: ارتفاع أقل للهيدر على الشاشات الأصغر** */
             }
             header h1 {
                 font-size: 1.5em;
             }
-            .lang-switcher {
-                top: 50%; /* تم التعديل: ليبقى في المنتصف عمودياً في الهيدر */
-                transform: translateY(-50%); /* تم التعديل: لإصلاح التوسيط العمودي */
-            }
 
             body {
-                padding-top: 100px;
+                padding-top: 90px; /* **تعديل: مسافة أعلى أقل للـ body لتعويض الهيدر الأصغر** */
             }
 
             .profile-card {
@@ -432,7 +413,7 @@
 </head>
 <body>
     <header>
-        <div class="container"> <div class="lang-switcher">
+        <div class="header-content-wrapper"> <div class="lang-switcher">
                 <button id="languageToggleButton" onclick="toggleLanguage()"></button>
             </div>
             <h1 data-lang="welcomeTitle">بطاقة أعمال رقمية</h1>
