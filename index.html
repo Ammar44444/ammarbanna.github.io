@@ -32,19 +32,20 @@
 
         body {
             font-family: 'Cairo', 'Poppins', sans-serif;
-            line-height: 1.6; /* تم التعديل: قيمة طبيعية ومريحة للقراءة */
+            line-height: 1.6; /* **هنا تم إعادة القيمة الصحيحة** */
             margin: 0;
-            background: var(--gradient-body); /* استخدام المتغير للخلفية المتدرجة */
-            color: var(--text-color-dark); /* لون النص الأساسي */
-            direction: rtl; /* الاتجاه الافتراضي للعربية */
-            text-align: right; /* المحاذاة الافتراضية للعربية */
-            min-height: 100vh; /* لجعل الفوتر يلتصق بالأسفل */
+            padding-top: 100px; /* **تم التعديل: إضافة مسافة علوية لتعويض الهيدر الثابت** */
+            background: var(--gradient-body);
+            color: var(--text-color-dark);
+            direction: rtl;
+            text-align: right;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center; /* تم التعديل: لتوسيط المحتوى أفقياً بشكل دائم */
-            justify-content: flex-start; /* يبدأ المحتوى من الأعلى */
-            overflow-x: hidden; /* لمنع ظهور شريط التمرير الأفقي غير المرغوب فيه */
-            transition: all 0.5s ease-in-out; /* انتقال سلس عند تغيير اتجاه اللغة */
+            align-items: center;
+            justify-content: flex-start;
+            overflow-x: hidden;
+            transition: all 0.5s ease-in-out;
         }
         /* الحاوية الرئيسية للمحتوى */
         .container {
@@ -68,7 +69,7 @@
             width: 100%; /* يمتد على عرض الشاشة بالكامل */
             text-align: center;
             box-shadow: 0 6px 20px var(--shadow-strong); /* ظل أقوى وأكثر بروزاً */
-            position: fixed; /* تثبيت الهيدر في الأعلى */
+            position: fixed; /* **تم التعديل: إرجاع الـ header ليكون fixed** */
             top: 0;
             left: 0;
             right: 0; /* تم التعديل: لضمان امتداده عبر العرض بالكامل مع التوسيط */
@@ -76,7 +77,7 @@
             display: flex; /* تم التعديل: لجعل العناصر داخل الهيدر مرنة */
             justify-content: center; /* تم التعديل: لتوسيط المحتوى داخل الهيدر */
             align-items: center; /* تم التعديل: لتوسيط العناصر عموديا داخل الهيدر */
-            position: relative; /* تم التعديل: إزالة fixed هنا، ووضعها على body */
+            /*position: relative; تم حذفها من هنا وعادت fixed */
         }
         /* الحاوية الداخلية للهيدر للتوسيط */
         header .container {
@@ -88,6 +89,10 @@
             justify-content: center;
             align-items: center;
             position: relative; /* لتحديد موقع زر اللغة بداخله */
+        }
+        header .container h1 { /* تم تعديل هذا المحدد ليكون أكثر دقة */
+            flex-grow: 1; /* ليأخذ المساحة المتاحة ويجعل الزر في الزاوية */
+            text-align: center; /* لتوسيط العنوان داخل الهيدر */
         }
 
         header h1 {
@@ -103,7 +108,7 @@
             top: 50%; /* تم التعديل: توسيط عمودي بالنسبة للعنوان */
             transform: translateY(-50%); /* تم التعديل: ضبط التوسيط */
             left: 0px; /* تم التعديل: ليكون على حافة الـ container */
-            display: flex;
+            display: flex; /* لضمان أن الزر يبقى مرنًا */
             z-index: 10;
         }
         /* لتغيير الموقع في اللغة الإنجليزية */
