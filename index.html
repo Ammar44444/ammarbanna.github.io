@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang="pageTitle">بطاقة أعمالي الرقمية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* المتغيرات (CSS Variables) - لسهولة تغيير الألوان الأساسية ونظام الألوان لاحقاً */
+        :root {
+            --primary-color: #007bff; /* أزرق مشرق وجذاب */
+            --primary-dark: #0056b3; /* أزرق داكن ومُكمل */
+            --secondary-background: #f8f9fa; /* لون فاتح للخلفية والعناصر الثانوية */
+            --text-color-dark: #343a40; /* لون النص الأساسي الغامق */
+            --text-color-light: #6c757d; /* لون نص ثانوي فاتح */
+            --light-border: #dee2e6; /* لون حدود فاتح */
+            --card-background: #ffffff; /* خلفية البطاقات بيضاء نقية */
+
+            --shadow-light: rgba(0, 0, 0, 0.08); /* ظل خفيف */
+            --shadow-medium: rgba(0, 0, 0, 0.15); /* ظل متوسط */
+            --shadow-strong: rgba(0, 0, 0, 0.25); /* ظل قوي */
+
+            --gradient-body: linear-gradient(135deg, #e0eafc, #cfdef3); /* تدرج خلفية ناعم لجسم الصفحة */
+            --gradient-header: linear-gradient(45deg, #1e3c72, #2a5298); /* تدرج رأس الصفحة الفاخر */
+        }
+
+        /* الأنماط الأساسية لـ HTML و Body */
+        html {
+            scroll-behavior: smooth; /* لتمرير سلس بين أقسام الصفحة إذا أضفنا روابط داخلية */
+        }
+
+        body {
+            font-family: 'Cairo', 'Poppins', sans-serif;
+            line-height: 0.1;
+            margin: 0;
+            padding-top: 120px; /* مسافة أعلى لـ header المثبت */
+            background: var(--gradient-body); /* استخدام المتغير للخلفية المتدرجة */
+            color: var(--text-color-dark); /* لون النص الأساسي */
+            direction: rtl; /* الاتجاه الافتراضي للعربية */
+            text-align: right; /* المحاذاة الافتراضية للعربية */
+            min-height: 100vh; /* لجعل الفوتر يلتصق بالأسفل */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* لتوسيط المحتوى أفقياً */
+            justify-content: flex-start; /* يبدأ المحتوى من الأعلى */
+            overflow-x: hidden; /* لمنع ظهور شريط التمرير الأفقي غير المرغوب فيه */
+            transition: all 0.5s ease-in-out; /* انتقال سلس عند تغيير اتجاه اللغة */
+        }
+        /* الحاوية الرئيسية للمحتوى */
+        .container {
+            max-width: 750px; /* عرض أكبر للبطاقة الرئيسية */
+            width: 90%; /* تجاوبية ممتازة على الشاشات الصغيرة */
+            margin: 40px auto; /* مسافة من الأعلى والأسفل */
+            flex-grow: 1; /* يسمح للحاوية بالتمدد لملء المساحة المتاحة */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* لتوسيط المحتوى عمودياً داخل الحاوية */
+            align-items: center; /* لتوسيط العناصر داخل الحاوية */
+            position: relative; /* لتموضع العناصر الداخلية بشكل صحيح */
+            z-index: 1; /* للتأكد من أنها فوق أي خلفيات متحركة أو تأثيرات */
+        }
+
+        /* رأس الصفحة (Header) - تصميم ثابت ومُحسّن */
+        header {
+            background: var(--gradient-header); /* استخدام المتغير للتدرج اللوني الفاخر */
+            color: #fff;
+            padding: 20px 0; /* مسافة داخلية محسّنة */
+            width: 100%; /* يمتد على عرض الشاشة بالكامل */
+            text-align: center;
+            box-shadow: 0 6px 20px var(--shadow-strong); /* ظل أقوى وأكثر بروزاً */
+            position: fixed; /* تثبيت الهيدر في الأعلى */
+            top: 0;
+            left: 0;
+            z-index: 1000; /* ليكون فوق كل شيء آخر في الصفحة */
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2em; /* حجم مناسب للعنوان المثبت */
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        /* مبدّل اللغة (Language Switcher) - تصميم أنيق وتفاعلي */
+        .lang-switcher {
+            position: absolute;
+            top: 50%; /* توسيط عمودي */
+            transform: translateY(-50%); /* ضبط التوسيط بناءً على حجم الزر */
+            left: 20px; /* للعربية: على اليسار */
+            display: flex;
+            gap: 10px; /* مسافة بين الأزرار */
+            z-index: 10; /* للتأكد من ظهوره فوق العناصر الأخرى في الهيدر */
+        }
+        [dir="ltr"] .lang-switcher { /* للإنجليزية: على اليمين */
+            left: unset; /* إلغاء الخاصية لـ LTR */
+            right: 20px; /* تحديدها لـ LTR */
+        }
+
+        .lang-switcher button {
+            background-color: rgba(255, 255, 255, 0.25); /* خلفية شبه شفافة */
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.7); /* حدود شفافة */
+            padding: 8px 18px;
+            border-radius: 25px; /* أزرار مستديرة */
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s ease; /* انتقال سلس عند التفاعل */
+            backdrop-filter: blur(8px); /* تأثير ضبابي أنيق للخلفية الشفافة */
+            box-shadow: 0 2px 8px var(--shadow-light); /* ظل خفيف للزر */
+        }
+
+        .lang-switcher button:hover {
+            background-color: rgba(255, 255, 255, 0.4); /* خلفية أكثر وضوحاً عند التحويم */
+            border-color: #fff; /* حدود واضحة عند التحويم */
+            transform: translateY(-3px); /* تأثير رفع خفيف عند التحويم */
+            box-shadow: 0 4px 12px var(--shadow-medium); /* ظل أقوى عند التحويم */
+        }
+
+        /* بطاقة الملف الشخصي (Profile Card) - القلب النابض للصفحة */
+        .profile-card {
+            background: var(--card-background); /* خلفية بيضاء نقية */
+            padding: 50px; /* مسافة داخلية سخية */
+            border-radius: 25px; /* حواف أكثر استدارة وفخامة */
+            box-shadow: 0 15px 40px var(--shadow-medium); /* ظل عميق وواقعي */
+            text-align: center;
+            width: 100%;
+            animation: fadeInScale 1.2s ease-out forwards; /* تأثير ظهور مع تكبير ناعم */
+            opacity: 0; /* يبدأ مخفياً */
+            transform: scale(0.95); /* يبدأ أصغر قليلاً */
+            position: relative; /* لتأثيرات الطبقات */
+            overflow: hidden; /* لإخفاء أي جزء من الظل الزائد عن الحواف المستديرة */
+        }
+
+        /* حركة ظهور البطاقة */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* صورة الملف الشخصي - أيقونة الصفحة */
+        .profile-card img {
+            display: block;
+            margin: 0 auto 40px auto; /* مسافة أكبر أسفل الصورة */
+            border-radius: 50%; /* دائرة مثالية */
+            width: 200px; /* حجم كبير وواضح للصورة */
+            height: 200px;
+            object-fit: cover; /* لضمان ملء الصورة للمساحة دون تشوه */
+            border: 8px solid var(--primary-color); /* حدود سميكة وبارزة باللون الأساسي */
+            box-shadow: 0 0 30px rgba(0, 123, 255, 0.5); /* ظل حول الصورة لإبرازها */
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* منحنى حركة احترافي لتأثير التحويم */
+        }
+        .profile-card img:hover {
+            transform: scale(1.1) rotate(5deg); /* تكبير ودوران أقوى قليلاً عند التحويم */
+        }
+
+        /* الاسم والمسمى الوظيفي */
+        .profile-card h2 {
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            font-size: 3em; /* حجم كبير وجذاب للاسم */
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .profile-card p.job-title {
+            font-size: 1.5em; /* حجم واضح للمسمى الوظيفي */
+            color: var(--text-color-light); /* لون أفتح للمسمى الوظيفي */
+            margin-bottom: 40px; /* مسافة أكبر قبل قسم المعلومات */
+            font-weight: 500;
+        }
+
+        /* شبكة المعلومات الشخصية - تصميم شبكي مرن */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* عمود واحد افتراضيًا للموبايل */
+            gap: 20px; /* مسافة أكبر بين عناصر الشبكة */
+            margin-bottom: 40px; /* مسافة قبل قسم التواصل الاجتماعي */
+        }
+
+        @media (min-width: 550px) { /* عمودين على الشاشات الأكبر من 550px */
+            .info-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            /* justify-content: flex-start;  // هذا السطر ألغه أو احذفه */
+            gap: 15px; /* مسافة بين الأيقونة والنص */
+            font-size: 1.15em;
+            color: var(--text-color-dark);
+            padding: 15px 20px;
+            background-color: var(--secondary-background);
+            border-radius: 12px;
+            box-shadow: 0 3px 8px var(--shadow-light);
+            transition: all 0.3s ease;
+            border: 1px solid var(--light-border);
+        }
+
+        /* إضافة هذه القاعدة الجديدة للتحكم في المحاذاة */
+        .info-item span,
+        .info-item a {
+            text-align: right; /* محاذاة النص لليمين افتراضياً للعربية */
+            flex-grow: 1; /* يسمح للنص بملء المساحة المتاحة بعد الأيقونة */
+        }
+
+        /* عند التحويل للغة الإنجليزية (LTR)، اجعل النص يبدأ من اليسار */
+        body[dir="ltr"] .info-item span,
+        body[dir="ltr"] .info-item a {
+            text-align: left;
+        }
+
+        .info-item:hover {
+            transform: translateY(-5px); /* رفع أقوى عند التحويم */
+            box-shadow: 0 6px 15px var(--shadow-medium); /* ظل أقوى عند التحويم */
+            background-color: var(--card-background); /* خلفية بيضاء عند التحويم */
+        }
+
+        .info-item i {
+            color: var(--primary-color);
+            font-size: 1.6em; /* أيقونات أكبر وأوضح */
+            width: 35px; /* لتثبيت عرض الأيقونة ومنع تذبذب المحتوى */
+            text-align: center;
+            flex-shrink: 0; /* منع الأيقونة من الانكماش */
+        }
+
+        .info-item a {
+            color: var(--primary-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            word-break: break-word; /* لمنع تجاوز الكلمات الطويلة */
+            flex-grow: 1; /* للسماح للنص بملء المساحة المتبقية */
+        }
+        .info-item a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        /* روابط التواصل الاجتماعي - أيقونات تفاعلية */
+        .social-links {
+            margin-top: 50px; /* مسافة أكبر من الأعلى */
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* للسماح للأيقونات بالانتقال لسطر جديد على الشاشات الصغيرة */
+            gap: 30px; /* مسافة أكبر بين الأيقونات */
+        }
+
+        .social-links a {
+            color: var(--primary-color);
+            font-size: 2.8em; /* أيقونات أكبر وأكثر بروزًا */
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative; /* لتأثيرات إضافية */
+        }
+
+        .social-links a::after { /* تأثير خط سفلي عند التحويم */
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-dark);
+            border-radius: 2px;
+            transition: transform 0.3s ease-out;
+        }
+
+        .social-links a:hover::after {
+            transform: translateX(-50%) scaleX(1); /* يظهر الخط عند التحويم */
+        }
+
+        .social-links a:hover {
+            color: var(--primary-dark);
+            transform: translateY(-10px) scale(1.25); /* تأثير رفع وتكبير أقوى */
+        }
+
+        /* تذييل الصفحة (Footer) - أنيق وثابت */
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--text-color-dark); /* خلفية داكنة للفوتر */
+            color: var(--secondary-background); /* نص فاتح للفوتر */
+            width: 100%;
+            box-shadow: 0 -4px 15px var(--shadow-medium); /* ظل للفوتر */
+            margin-top: auto; /* يدفع الفوتر للأسفل في أي حجم شاشة */
+            position: relative;
+            z-index: 1;
+        }
+
+        /* تنسيقات خاصة باللغة الإنجليزية (LTR) */
+        body[dir="ltr"] {
+            direction: ltr;
+            text-align: left;
+        }
+        [dir="ltr"] .info-item {
+            justify-content: flex-start; /* محاذاة لليسار في LTR */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="lang-switcher">
+            <button onclick="setLanguage('ar')" data-lang="langArBtn">العربية</button>
+            <button onclick="setLanguage('en')" data-lang="langEnBtn">English</button>
+        </div>
+        <div class="container">
+            <h1 data-lang="welcomeTitle">بطاقة أعمال رقمية</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="profile-card">
+            <img src="my-profile.png" alt="صورة الملف الشخصي">
+            <h2 data-lang="name">عمار محمد البنا</h2>
+            <p class="job-title" data-lang="jobTitle">علوم وهندسة الحاسب</p>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <i class="fas fa-phone-alt"></i> <span data-lang="phoneNumber">+966 55 179 4244</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:ba4ammar@gmail.com" data-lang="emailAddress">ba4ammar@gmail.com</a>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span data-lang="location">حفر الباطن</span>
+                </div>
+                <div class="info-item">
+                    <i class="fa-solid fa-file"></i> <a href="MyCV.pdf" target="_blank" data-lang="websiteLink">السيرة الذاتية</a>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-briefcase"></i>
+                    <span data-lang="experience">خبرة سنة</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-lightbulb"></i> <span data-lang="profession">مبرمج</span>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/ammar-banna-bb7bb72b2?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://x.com/ammarbanna4?t=PYR_FJE_daokYrUTvXcJIg&s=09" target="_blank" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+                <a href="https://www.instagram.com/4_ammar_4?igsh=MnBjdGNvZjQ2dXdm" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/share/1CAi4Ai6eY/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://wa.me/qr/GRETNLA6LFPPA1" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p data-lang="footerText">جميع الحقوق محفوظة &copy; 2025</p>
+    </footer>
+
+    <script>
+        const translations = {
+            'ar': {
+                pageTitle: 'بطاقة أعمال رقمية',
+                welcomeTitle: 'بطاقة أعمال رقمية',
+                name: 'عمار محمد البنا',
+                jobTitle: 'علوم وهندسة الحاسب',
+                phoneNumber: '+966 55 179 4244',
+                emailAddress: 'ba4ammar@gmail.com',
+                location: 'حفر الباطن',
+                websiteLink: 'السيرة الذاتية',
+                experience: 'خبرة سنة',
+                profession: 'مبرمج',
+                footerText: 'جميع الحقوق محفوظة © 2025',
+                langArBtn: 'العربية',
+                langEnBtn: 'English'
+            },
+            'en': {
+                pageTitle: 'Business Card',
+                welcomeTitle: 'Business Card',
+                name: 'Ammar Mohammed Al-Banna',
+                jobTitle: 'Computer Science and Engineering',
+                phoneNumber: '+966 55 179 4244',
+                emailAddress: 'ba4ammar@gmail.com',
+                location: 'Hafr Al-Batin, Saudi Arabia',
+                websiteLink: 'CV',
+                experience: '1 Year of Experience',
+                profession: 'Programmer',
+                footerText: 'All rights reserved © 2025',
+                langArBtn: 'العربية',
+                langEnBtn: 'English'
+            }
+        };
+
+        function setLanguage(lang) {
+            document.documentElement.lang = lang; // تحديث سمة اللغة لـ SEO وقارئات الشاشة
+            document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr'); // تحديد اتجاه النص
+
+            // إعادة تشغيل animation على بطاقة الملف الشخصي لتظهر بانتقال ناعم
+            const profileCard = document.querySelector('.profile-card');
+            profileCard.style.animation = 'none'; // تعطيل مؤقت للحركة
+            void profileCard.offsetWidth; // هذا السطر يجبر المتصفح على إعادة حساب العرض، وهو ضروري لإعادة تشغيل الـ animation
+            profileCard.style.animation = 'fadeInScale 1.2s ease-out forwards'; // إعادة تطبيق الـ animation
+
+            // تحديث النصوص بناءً على اللغة المختارة
+            for (const key in translations[lang]) {
+                const element = document.querySelector(`[data-lang="${key}"]`);
+                if (element) {
+                    element.textContent = translations[lang][key];
+                }
+            }
+        }
+
+        // تعيين اللغة الافتراضية عند تحميل الصفحة
+        setLanguage('en');
+    </script>
+</body>
+</html>
