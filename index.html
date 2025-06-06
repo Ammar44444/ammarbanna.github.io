@@ -32,9 +32,8 @@
 
         body {
             font-family: 'Cairo', 'Poppins', sans-serif;
-            line-height: 0; /* تم التعديل: قيمة طبيعية ومريحة للقراءة */
+            line-height: 1.6; /* تم التعديل: قيمة طبيعية ومريحة للقراءة */
             margin: 0;
-            padding-top: 120px; /* مسافة أعلى لـ header المثبت */
             background: var(--gradient-body); /* استخدام المتغير للخلفية المتدرجة */
             color: var(--text-color-dark); /* لون النص الأساسي */
             direction: rtl; /* الاتجاه الافتراضي للعربية */
@@ -42,8 +41,8 @@
             min-height: 100vh; /* لجعل الفوتر يلتصق بالأسفل */
             display: flex;
             flex-direction: column;
-            align-items: center; /* لتوسيط المحتوى أفقياً */
-            justify-content: center; /* يبدأ المحتوى من الأعلى */
+            align-items: center; /* تم التعديل: لتوسيط المحتوى أفقياً بشكل دائم */
+            justify-content: flex-start; /* يبدأ المحتوى من الأعلى */
             overflow-x: hidden; /* لمنع ظهور شريط التمرير الأفقي غير المرغوب فيه */
             transition: all 0.5s ease-in-out; /* انتقال سلس عند تغيير اتجاه اللغة */
         }
@@ -51,7 +50,7 @@
         .container {
             max-width: 750px; /* عرض أكبر للبطاقة الرئيسية */
             width: 90%; /* تجاوبية ممتازة على الشاشات الصغيرة */
-            margin: 40px auto; /* مسافة من الأعلى والأسفل */
+            margin: 40px auto; /* مسافة من الأعلى والأسفل، auto للتوسيط الأفقي */
             flex-grow: 1; /* يسمح للحاوية بالتمدد لملء المساحة المتاحة */
             display: flex;
             flex-direction: column;
@@ -72,7 +71,23 @@
             position: fixed; /* تثبيت الهيدر في الأعلى */
             top: 0;
             left: 0;
+            right: 0; /* تم التعديل: لضمان امتداده عبر العرض بالكامل مع التوسيط */
             z-index: 1000; /* ليكون فوق كل شيء آخر في الصفحة */
+            display: flex; /* تم التعديل: لجعل العناصر داخل الهيدر مرنة */
+            justify-content: center; /* تم التعديل: لتوسيط المحتوى داخل الهيدر */
+            align-items: center; /* تم التعديل: لتوسيط العناصر عموديا داخل الهيدر */
+            position: relative; /* تم التعديل: إزالة fixed هنا، ووضعها على body */
+        }
+        /* الحاوية الداخلية للهيدر للتوسيط */
+        header .container {
+            max-width: 750px;
+            width: 90%;
+            margin: 0 auto; /* توسيط الهيدر الداخلي */
+            padding: 0 10px; /* لتوفير مساحة للزر إذا كان قريب من الحافة */
+            display: flex; /* للتأكد من المحاذاة الصحيحة */
+            justify-content: center;
+            align-items: center;
+            position: relative; /* لتحديد موقع زر اللغة بداخله */
         }
 
         header h1 {
@@ -84,53 +99,55 @@
 
         /* مبدّل اللغة (Language Switcher) - تصميم أنيق وتفاعلي */
         .lang-switcher {
-            position: absolute;
-            top: 20px; /* تم التعديل: تثبيت في الزاوية العلوية */
-            left: 20px; /* للعربية: على اليسار */
-            display: flex; /* لضمان أن الزر يبقى مرنًا */
-            z-index: 10; /* للتأكد من ظهوره فوق العناصر الأخرى في الهيدر */
+            position: absolute; /* تم التعديل: موضع مطلق بالنسبة لـ header .container */
+            top: 50%; /* تم التعديل: توسيط عمودي بالنسبة للعنوان */
+            transform: translateY(-50%); /* تم التعديل: ضبط التوسيط */
+            left: 0px; /* تم التعديل: ليكون على حافة الـ container */
+            display: flex;
+            z-index: 10;
         }
-        [dir="ltr"] .lang-switcher { /* للإنجليزية: على اليمين */
-            left: unset; /* إلغاء الخاصية لـ LTR */
-            right: 20px; /* تحديدها لـ LTR */
+        /* لتغيير الموقع في اللغة الإنجليزية */
+        body[dir="ltr"] .lang-switcher {
+            left: unset;
+            right: 0px; /* تم التعديل: ليكون على حافة الـ container */
         }
 
         .lang-switcher button {
-            background-color: rgba(255, 255, 255, 0.25); /* خلفية شبه شفافة */
+            background-color: rgba(255, 255, 255, 0.25);
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.7); /* حدود شفافة */
+            border: 1px solid rgba(255, 255, 255, 0.7);
             padding: 8px 18px;
-            border-radius: 25px; /* أزرار مستديرة */
+            border-radius: 25px;
             cursor: pointer;
             font-size: 0.95em;
             font-weight: 600;
-            transition: all 0.3s ease; /* انتقال سلس عند التفاعل */
-            backdrop-filter: blur(8px); /* تأثير ضبابي أنيق للخلفية الشفافة */
-            box-shadow: 0 2px 8px var(--shadow-light); /* ظل خفيف للزر */
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 8px var(--shadow-light);
             min-width: 60px; /* لضمان عرض كافٍ للزر */
-            text-align: center; /* توسيط النص داخل الزر */
+            text-align: center;
         }
 
         .lang-switcher button:hover {
-            background-color: rgba(255, 255, 255, 0.4); /* خلفية أكثر وضوحاً عند التحويم */
-            border-color: #fff; /* حدود واضحة عند التحويم */
-            transform: translateY(-3px); /* تأثير رفع خفيف عند التحويم */
-            box-shadow: 0 4px 12px var(--shadow-medium); /* ظل أقوى عند التحويم */
+            background-color: rgba(255, 255, 255, 0.4);
+            border-color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px var(--shadow-medium);
         }
 
         /* بطاقة الملف الشخصي (Profile Card) - القلب النابض للصفحة */
         .profile-card {
-            background: var(--card-background); /* خلفية بيضاء نقية */
-            padding: 50px; /* مسافة داخلية سخية */
-            border-radius: 25px; /* حواف أكثر استدارة وفخامة */
-            box-shadow: 0 15px 40px var(--shadow-medium); /* ظل عميق وواقعي */
+            background: var(--card-background);
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px var(--shadow-medium);
             text-align: center;
             width: 100%;
-            animation: fadeInScale 1.2s ease-out forwards; /* تأثير ظهور مع تكبير ناعم */
-            opacity: 0; /* يبدأ مخفياً */
-            transform: scale(0.95); /* يبدأ أصغر قليلاً */
-            position: relative; /* لتأثيرات الطبقات */
-            overflow: hidden; /* لإخفاء أي جزء من الظل الزائد عن الحواف المستديرة */
+            animation: fadeInScale 1.2s ease-out forwards;
+            opacity: 0;
+            transform: scale(0.95);
+            position: relative;
+            overflow: hidden;
         }
 
         /* حركة ظهور البطاقة */
@@ -142,32 +159,32 @@
         /* صورة الملف الشخصي - أيقونة الصفحة */
         .profile-card img {
             display: block;
-            margin: 0 auto 40px auto; /* مسافة أكبر أسفل الصورة */
-            border-radius: 50%; /* دائرة مثالية */
-            width: 200px; /* حجم كبير وواضح للصورة */
+            margin: 0 auto 40px auto;
+            border-radius: 50%;
+            width: 200px;
             height: 200px;
-            object-fit: cover; /* لضمان ملء الصورة للمساحة دون تشوه */
-            border: 8px solid var(--primary-color); /* حدود سميكة وبارزة باللون الأساسي */
-            box-shadow: 0 0 30px rgba(0, 123, 255, 0.5); /* ظل حول الصورة لإبرازها */
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* منحنى حركة احترافي لتأثير التحويم */
+            object-fit: cover;
+            border: 8px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(0, 123, 255, 0.5);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .profile-card img:hover {
-            transform: scale(1.1) rotate(5deg); /* تكبير ودوران أقوى قليلاً عند التحويم */
+            transform: scale(1.1) rotate(5deg);
         }
 
         /* الاسم والمسمى الوظيفي */
         .profile-card h2 {
             color: var(--primary-dark);
             margin-bottom: 8px;
-            font-size: 3em; /* حجم كبير وجذاب للاسم */
+            font-size: 3em;
             font-weight: 700;
             line-height: 1.2;
         }
 
         .profile-card p.job-title {
-            font-size: 1.5em; /* حجم واضح للمسمى الوظيفي */
-            color: var(--text-color-light); /* لون أفتح للمسمى الوظيفي */
-            margin-bottom: 40px; /* مسافة أكبر قبل قسم المعلومات */
+            font-size: 1.5em;
+            color: var(--text-color-light);
+            margin-bottom: 40px;
             font-weight: 500;
         }
 
@@ -175,11 +192,11 @@
         .info-grid {
             display: grid;
             grid-template-columns: 1fr; /* عمود واحد افتراضيًا للموبايل */
-            gap: 20px; /* مسافة أكبر بين عناصر الشبكة */
-            margin-bottom: 40px; /* مسافة قبل قسم التواصل الاجتماعي */
+            gap: 20px;
+            margin-bottom: 40px;
         }
 
-        @media (min-width: 550px) { /* عمودين على الشاشات الأكبر من 550px */
+        @media (min-width: 550px) {
             .info-grid {
                 grid-template-columns: 1fr 1fr;
             }
@@ -188,7 +205,7 @@
         .info-item {
             display: flex;
             align-items: center;
-            gap: 15px; /* مسافة بين الأيقونة والنص */
+            gap: 15px;
             font-size: 1.15em;
             color: var(--text-color-dark);
             padding: 15px 20px;
@@ -199,39 +216,37 @@
             border: 1px solid var(--light-border);
         }
 
-        /* إضافة هذه القاعدة الجديدة للتحكم في المحاذاة */
         .info-item span,
         .info-item a {
-            text-align: right; /* محاذاة النص لليمين افتراضياً للعربية */
-            flex-grow: 1; /* يسمح للنص بملء المساحة المتاحة بعد الأيقونة */
+            text-align: right;
+            flex-grow: 1;
         }
 
-        /* عند التحويل للغة الإنجليزية (LTR)، اجعل النص يبدأ من اليسار */
         body[dir="ltr"] .info-item span,
         body[dir="ltr"] .info-item a {
             text-align: left;
         }
 
         .info-item:hover {
-            transform: translateY(-5px); /* رفع أقوى عند التحويم */
-            box-shadow: 0 6px 15px var(--shadow-medium); /* ظل أقوى عند التحويم */
-            background-color: var(--card-background); /* خلفية بيضاء عند التحويم */
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px var(--shadow-medium);
+            background-color: var(--card-background);
         }
 
         .info-item i {
             color: var(--primary-color);
-            font-size: 1.6em; /* أيقونات أكبر وأوضح */
-            width: 35px; /* لتثبيت عرض الأيقونة ومنع تذبذب المحتوى */
+            font-size: 1.6em;
+            width: 35px;
             text-align: center;
-            flex-shrink: 0; /* منع الأيقونة من الانكماش */
+            flex-shrink: 0;
         }
 
         .info-item a {
             color: var(--primary-dark);
             text-decoration: none;
             transition: color 0.3s ease;
-            word-break: break-word; /* لمنع تجاوز الكلمات الطويلة */
-            flex-grow: 1; /* للسماح للنص بملء المساحة المتبقية */
+            word-break: break-word;
+            flex-grow: 1;
         }
         .info-item a:hover {
             color: var(--primary-color);
@@ -240,22 +255,22 @@
 
         /* روابط التواصل الاجتماعي - أيقونات تفاعلية */
         .social-links {
-            margin-top: 50px; /* مسافة أكبر من الأعلى */
+            margin-top: 50px;
             display: flex;
             justify-content: center;
-            flex-wrap: wrap; /* للسماح للأيقونات بالانتقال لسطر جديد على الشاشات الصغيرة */
-            gap: 30px; /* مسافة أكبر بين الأيقونات */
+            flex-wrap: wrap;
+            gap: 30px;
         }
 
         .social-links a {
             color: var(--primary-color);
-            font-size: 2.8em; /* أيقونات أكبر وأكثر بروزًا */
+            font-size: 2.8em;
             text-decoration: none;
             transition: color 0.3s ease, transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative; /* لتأثيرات إضافية */
+            position: relative;
         }
 
-        .social-links a::after { /* تأثير خط سفلي عند التحويم */
+        .social-links a::after {
             content: '';
             position: absolute;
             bottom: -8px;
@@ -269,23 +284,23 @@
         }
 
         .social-links a:hover::after {
-            transform: translateX(-50%) scaleX(1); /* يظهر الخط عند التحويم */
+            transform: translateX(-50%) scaleX(1);
         }
 
         .social-links a:hover {
             color: var(--primary-dark);
-            transform: translateY(-10px) scale(1.25); /* تأثير رفع وتكبير أقوى */
+            transform: translateY(-10px) scale(1.25);
         }
 
         /* تذييل الصفحة (Footer) - أنيق وثابت */
         footer {
             text-align: center;
             padding: 25px;
-            background: var(--text-color-dark); /* خلفية داكنة للفوتر */
-            color: var(--secondary-background); /* نص فاتح للفوتر */
+            background: var(--text-color-dark);
+            color: var(--secondary-background);
             width: 100%;
-            box-shadow: 0 -4px 15px var(--shadow-medium); /* ظل للفوتر */
-            margin-top: auto; /* يدفع الفوتر للأسفل في أي حجم شاشة */
+            box-shadow: 0 -4px 15px var(--shadow-medium);
+            margin-top: auto;
             position: relative;
             z-index: 1;
         }
@@ -295,104 +310,97 @@
             direction: ltr;
             text-align: left;
         }
-        [dir="ltr"] .info-item {
-            justify-content: flex-start; /* محاذاة لليسار في LTR */
+        body[dir="ltr"] .info-item { /* تم التعديل: لتطبيق المحاذاة على LTR */
+            justify-content: flex-start;
         }
 
         /* التعديلات الخاصة بالتجاوبية للهيدر وأزرار اللغة */
         @media (max-width: 768px) {
             .container {
-                width: 95%; /* زيادة العرض على الشاشات الأصغر لاستغلال المساحة */
-                margin: 20px auto; /* تقليل الهوامش الرأسية */
+                width: 95%;
+                margin: 20px auto;
             }
 
             header h1 {
-                font-size: 1.8em; /* تقليل حجم عنوان الهيدر */
+                font-size: 1.8em;
             }
 
             .lang-switcher {
-                left: 10px; /* تقليل المسافة من اليسار */
-                top: 15px; /* تثبيت الموضع ليتناسب مع الجوال */
+                left: 10px; /* تم التعديل: ضبط المسافة من الحافة */
+                top: 50%; /* تم التعديل: ليبقى في المنتصف عمودياً في الهيدر */
+                transform: translateY(-50%); /* تم التعديل: لإصلاح التوسيط العمودي */
             }
-            [dir="ltr"] .lang-switcher {
-                right: 10px; /* تقليل المسافة من اليمين للغة الإنجليزية */
+            body[dir="ltr"] .lang-switcher {
+                right: 10px; /* تم التعديل: ضبط المسافة من الحافة */
                 left: unset;
             }
 
             .lang-switcher button {
-                padding: 6px 12px; /* تصغير حجم أزرار اللغة */
+                padding: 6px 12px;
                 font-size: 0.85em;
             }
 
             .profile-card {
-                padding: 30px 20px; /* تقليل المسافات الداخلية للبطاقة */
-                border-radius: 15px; /* تقليل استدارة الحواف قليلاً */
+                padding: 30px 20px;
+                border-radius: 15px;
             }
 
             .profile-card img {
-                width: 150px; /* تصغير حجم الصورة */
+                width: 150px;
                 height: 150px;
-                margin-bottom: 20px; /* تقليل المسافة تحت الصورة */
-                border-width: 5px; /* تقليل سمك حدود الصورة */
+                margin-bottom: 20px;
+                border-width: 5px;
             }
 
             .profile-card h2 {
-                font-size: 2.2em; /* تصغير حجم الاسم */
+                font-size: 2.2em;
             }
 
             .profile-card p.job-title {
-                font-size: 1.2em; /* تصغير حجم المسمى الوظيفي */
-                margin-bottom: 25px; /* تقليل المسافة */
+                font-size: 1.2em;
+                margin-bottom: 25px;
             }
 
             .info-grid {
-                grid-template-columns: 1fr; /* دائما عمود واحد على الجوال لسهولة القراءة */
-                gap: 15px; /* تقليل المسافة بين عناصر الشبكة */
-                margin-bottom: 25px; /* تقليل المسافة */
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin-bottom: 25px;
             }
 
             .info-item {
-                font-size: 1em; /* تصغير حجم النص في عناصر المعلومات */
-                padding: 12px 15px; /* تقليل المساحة الداخلية */
+                font-size: 1em;
+                padding: 12px 15px;
             }
 
             .info-item i {
-                font-size: 1.4em; /* تصغير حجم أيقونات المعلومات */
-                width: 30px; /* ضبط عرض الأيقونة */
+                font-size: 1.4em;
+                width: 30px;
             }
 
             .social-links {
-                margin-top: 30px; /* تقليل المسافة من الأعلى */
-                gap: 20px; /* تقليل المسافة بين أيقونات التواصل الاجتماعي */
+                margin-top: 30px;
+                gap: 20px;
             }
 
             .social-links a {
-                font-size: 2.2em; /* تصغير حجم أيقونات التواصل الاجتماعي */
+                font-size: 2.2em;
             }
         }
 
         @media (max-width: 480px) {
             header {
-                padding: 15px 0; /* تقليل padding في الهيدر */
+                padding: 15px 0;
             }
             header h1 {
-                font-size: 1.5em; /* تصغير حجم العنوان أكثر */
+                font-size: 1.5em;
             }
             .lang-switcher {
-                top: 15px; /* ضبط الموضع في الهيدر */
-                transform: translateY(0); /* تم التعديل: إزالة تحويل العمودية */
-            }
-            [dir="ltr"] .lang-switcher {
-                right: 10px;
-                left: unset;
-            }
-            .lang-switcher button {
-                padding: 5px 10px;
-                font-size: 0.8em;
+                top: 50%; /* تم التعديل: ليبقى في المنتصف عمودياً في الهيدر */
+                transform: translateY(-50%); /* تم التعديل: لإصلاح التوسيط العمودي */
             }
 
             body {
-                padding-top: 100px; /* ضبط المسافة العلوية ليتناسب مع الهيدر المصغر */
+                padding-top: 100px;
             }
 
             .profile-card {
@@ -408,21 +416,20 @@
             }
 
             .social-links a {
-                font-size: 2em; /* حجم مناسب جداً لأيقونات السوشيال ميديا على الجوالات الصغيرة */
-                transform: translateY(0) scale(1); /* إلغاء تأثير التحويم القوي على الجوالات */
+                font-size: 2em;
+                transform: translateY(0) scale(1);
             }
             .social-links a:hover {
-                transform: translateY(0) scale(1.1); /* تأثير تحويم خفيف فقط */
+                transform: translateY(0) scale(1.1);
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="lang-switcher">
-            <button id="languageToggleButton" onclick="toggleLanguage()"></button>
-        </div>
-        <div class="container">
+        <div class="container"> <div class="lang-switcher">
+                <button id="languageToggleButton" onclick="toggleLanguage()"></button>
+            </div>
             <h1 data-lang="welcomeTitle">بطاقة أعمال رقمية</h1>
         </div>
     </header>
@@ -485,7 +492,6 @@
                 experience: 'خبرة سنة',
                 profession: 'مبرمج',
                 footerText: 'جميع الحقوق محفوظة © 2025'
-                // تم إزالة langArBtn و langEnBtn من هنا لأنهما لم يعودا يستخدمان للنص
             },
             'en': {
                 pageTitle: 'Business Card',
@@ -499,11 +505,10 @@
                 experience: '1 Year of Experience',
                 profession: 'Programmer',
                 footerText: 'All rights reserved © 2025'
-                // تم إزالة langArBtn و langEnBtn من هنا لأنهما لم يعودا يستخدمان للنص
             }
         };
 
-        const langToggleButton = document.getElementById('languageToggleButton'); // جلب زر التبديل
+        const langToggleButton = document.getElementById('languageToggleButton');
         let currentLang = 'en'; // تعيين اللغة الافتراضية عند التحميل
 
         function setLanguage(lang) {
@@ -521,15 +526,15 @@
                     element.textContent = translations[lang][key];
                 }
             }
-            currentLang = lang; // تحديث اللغة الحالية
+            currentLang = lang;
             updateToggleButtonText(); // تحديث نص الزر بعد تغيير اللغة
         }
 
         function updateToggleButtonText() {
             if (currentLang === 'ar') {
-                langToggleButton.textContent = 'EN'; // إذا كانت الصفحة بالعربية، الزر يعرض EN
+                langToggleButton.textContent = 'EN';
             } else {
-                langToggleButton.textContent = 'AR'; // إذا كانت الصفحة بالإنجليزية، الزر يعرض AR
+                langToggleButton.textContent = 'AR';
             }
         }
 
@@ -542,8 +547,7 @@
         }
 
         // تعيين اللغة الافتراضية عند تحميل الصفحة وتحديث نص الزر الأولي
-        setLanguage('en'); // تبدأ بالإنجليزية
-        // updateToggleButtonText(); // سيتم استدعاؤها داخل setLanguage
+        setLanguage('en');
     </script>
 </body>
 </html>
