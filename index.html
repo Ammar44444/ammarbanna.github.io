@@ -32,21 +32,32 @@
 
         body {
             font-family: 'Cairo', 'Poppins', sans-serif;
-            line-height: 1.6; /* **قيمة طبيعية ومريحة للقراءة** */
+            line-height: 1.6;
             margin: 0;
-            padding-top: 100px; /* **تعديل: مسافة أعلى لـ header المثبت. يمكن تعديلها إذا كان الهيدر أعلى أو أقل ارتفاعاً** */
-            background: var(--gradient-body); /* استخدام المتغير للخلفية المتدرجة */
-            color: var(--text-color-dark); /* لون النص الأساسي */
-            direction: rtl; /* الاتجاه الافتراضي للعربية */
-            text-align: right; /* المحاذاة الافتراضية للعربية */
-            min-height: 100vh; /* لجعل الفوتر يلتصق بالأسفل */
+            padding-top: 100px; /* مسافة أعلى لـ header المثبت */
+            background: var(--gradient-body);
+            color: var(--text-color-dark);
+            direction: ltr; /* **تعديل: تثبيت الاتجاه لليسار** */
+            text-align: left; /* **تعديل: تثبيت المحاذاة لليسار** */
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center; /* لتوسيط المحتوى أفقياً */
-            justify-content: flex-start; /* يبدأ المحتوى من الأعلى */
-            /* overflow-x: hidden; **تم التعليق عليها/إزالتها مؤقتًا للبحث عن سبب الانزياح** */
-            transition: all 0.5s ease-in-out; /* انتقال سلس عند تغيير اتجاه اللغة */
+            align-items: center;
+            justify-content: flex-start;
+            overflow-x: hidden; /* يمكن إعادته بعد التأكد من عدم وجود انزياح */
+            transition: all 0.5s ease-in-out;
         }
+
+/* يمكنك إزالة هذا الجزء بالكامل بما أننا سنثبت الاتجاه */
+/*
+body[dir="ltr"] {
+    direction: ltr;
+    text-align: left;
+}
+body[dir="ltr"] .info-item {
+    justify-content: flex-start;
+}
+*/
         /* الحاوية الرئيسية للمحتوى */
         .container {
             max-width: 750px; /* عرض أكبر للبطاقة الرئيسية */
@@ -92,12 +103,12 @@
         }
 
         header h1 {
-            margin: 0; /* إزالة الهوامش الافتراضية للعنوان */
+            margin: 0;
             font-size: 2.2em;
             letter-spacing: 1px;
             font-weight: 700;
-            flex-grow: 1; /* **تعديل: للسماح للعنوان بأخذ المساحة المتبقية** */
-            text-align: center; /* **تعديل: توسيط النص داخل الـ H1** */
+            text-align: center; /* هذا السطر هو الأهم للتوسيط */
+            width: 100%; /* تأكد من أن العرض 100% */
         }
 
         /* مبدّل اللغة (Language Switcher) - تصميم أنيق وتفاعلي */
@@ -499,7 +510,6 @@
 
         function setLanguage(lang) {
             document.documentElement.lang = lang;
-            document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
 
             const profileCard = document.querySelector('.profile-card');
             profileCard.style.animation = 'none';
@@ -512,8 +522,15 @@
                     element.textContent = translations[lang][key];
                 }
             }
+
+            // تغيير محاذاة النص داخل مربعات المعلومات فقط
+            const infoItems = document.querySelectorAll('.info-item span, .info-item a');
+            infoItems.forEach(item => {
+                item.style.textAlign = lang === 'ar' ? 'right' : 'left';
+            });
+
             currentLang = lang;
-            updateToggleButtonText(); // تحديث نص الزر بعد تغيير اللغة
+            updateToggleButtonText();
         }
 
         function updateToggleButtonText() {
