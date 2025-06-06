@@ -185,6 +185,122 @@
             }
         }
 
+        @media (max-width: 768px) { /* تعديلات عامة للشاشات الأصغر من 768px (الأجهزة اللوحية والجوالات) */
+            .container {
+                width: 95%; /* زيادة العرض على الشاشات الأصغر لاستغلال المساحة */
+                margin: 20px auto; /* تقليل الهوامش الرأسية */
+            }
+
+            header h1 {
+                font-size: 1.8em; /* تقليل حجم عنوان الهيدر */
+            }
+
+            .lang-switcher {
+                left: 10px; /* تقليل المسافة من اليسار */
+            }
+            [dir="ltr"] .lang-switcher {
+                right: 10px; /* تقليل المسافة من اليمين للغة الإنجليزية */
+            }
+
+            .lang-switcher button {
+                padding: 6px 12px; /* تصغير حجم أزرار اللغة */
+                font-size: 0.85em;
+            }
+
+            .profile-card {
+                padding: 30px 20px; /* تقليل المسافات الداخلية للبطاقة */
+                border-radius: 15px; /* تقليل استدارة الحواف قليلاً */
+            }
+
+            .profile-card img {
+                width: 150px; /* تصغير حجم الصورة */
+                height: 150px;
+                margin-bottom: 20px; /* تقليل المسافة تحت الصورة */
+                border-width: 5px; /* تقليل سمك حدود الصورة */
+            }
+
+            .profile-card h2 {
+                font-size: 2.2em; /* تصغير حجم الاسم */
+            }
+
+            .profile-card p.job-title {
+                font-size: 1.2em; /* تصغير حجم المسمى الوظيفي */
+                margin-bottom: 25px; /* تقليل المسافة */
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr; /* دائما عمود واحد على الجوال لسهولة القراءة */
+                gap: 15px; /* تقليل المسافة بين عناصر الشبكة */
+                margin-bottom: 25px; /* تقليل المسافة */
+            }
+
+            .info-item {
+                font-size: 1em; /* تصغير حجم النص في عناصر المعلومات */
+                padding: 12px 15px; /* تقليل المساحة الداخلية */
+            }
+
+            .info-item i {
+                font-size: 1.4em; /* تصغير حجم أيقونات المعلومات */
+                width: 30px; /* ضبط عرض الأيقونة */
+            }
+
+            .social-links {
+                margin-top: 30px; /* تقليل المسافة من الأعلى */
+                gap: 20px; /* تقليل المسافة بين أيقونات التواصل الاجتماعي */
+            }
+
+            .social-links a {
+                font-size: 2.2em; /* تصغير حجم أيقونات التواصل الاجتماعي */
+            }
+        }
+
+        @media (max-width: 480px) { /* تعديلات خاصة جداً بالجوالات الصغيرة */
+            header {
+                padding: 15px 0; /* تقليل padding في الهيدر */
+            }
+            header h1 {
+                font-size: 1.5em; /* تصغير حجم العنوان أكثر */
+            }
+            .lang-switcher {
+                top: 15px; /* ضبط الموضع في الهيدر */
+                transform: translateY(0);
+                flex-direction: column; /* جعل الأزرار فوق بعضها البعض */
+                gap: 5px;
+            }
+            [dir="ltr"] .lang-switcher {
+                right: 10px;
+                left: unset;
+            }
+            .lang-switcher button {
+                padding: 5px 10px;
+                font-size: 0.8em;
+            }
+
+            body {
+                padding-top: 100px; /* ضبط المسافة العلوية ليتناسب مع الهيدر المصغر */
+            }
+
+            .profile-card {
+                padding: 20px 15px;
+            }
+
+            .profile-card h2 {
+                font-size: 1.8em;
+            }
+
+            .profile-card p.job-title {
+                font-size: 1em;
+            }
+
+            .social-links a {
+                font-size: 2em; /* حجم مناسب جداً لأيقونات السوشيال ميديا على الجوالات الصغيرة */
+                transform: translateY(0) scale(1); /* إلغاء تأثير التحويم القوي على الجوالات */
+            }
+            .social-links a:hover {
+                transform: translateY(0) scale(1.1); /* تأثير تحويم خفيف فقط */
+            }
+        }
+
         .info-item {
             display: flex;
             align-items: center;
